@@ -1,7 +1,26 @@
+// Khai báo thư viện cần dùng
 import 'package:flutter/material.dart';
 
+// Bước 2: Hàm main là hàm đầu tiên nó chạy
 void main() {
-  runApp(const MyApp());
+  // Bước 3: Chạy hàm khởi động app
+  runApp(MaterialApp(
+    // Sử dụng widget
+    home: SafeArea(
+      // để giao diện k bị đè lên khung điện thoại
+      child: Scaffold(
+        // giao diện bên trong màn hình
+        body: Center(
+            child: TextWidget(),
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.green,
+          title: Text('Tu hoc flutter'),
+        ),
+      ),
+    ),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -120,3 +139,97 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+// Code Nam viết
+//StateLess Widget chỉ cần 1 class kế thừa StatelessWidget
+class MyWidgetLess extends StatelessWidget {
+
+  final bool loading;
+
+  const MyWidgetLess(this.loading, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // if(loading){
+    //   return CircularProgressIndicator();
+    // }else{
+    //   return Text('StateLess');
+    // }
+    return loading ?  CircularProgressIndicator() : Text('StateLess');
+    throw UnimplementedError();
+  }
+}
+
+// StateFullWidget thì kế thừa từ StatefulWidget gồm 2 bước với 2 class khác nhau
+class MyWidgetFull extends StatefulWidget{
+  final bool loading;
+
+  const MyWidgetFull(this.loading, {super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return MyWidgetFullState();
+  }
+
+}
+// Class State kế thừa State<MyWidgetFull>  chứa hàm build
+class MyWidgetFullState extends State<MyWidgetFull> {
+ late bool _localLoading;
+
+  @override
+  void initState(){
+    _localLoading = widget.loading;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _localLoading ?  CircularProgressIndicator() : FloatingActionButton(onPressed: onClickButton,);
+  }
+
+  void onClickButton(){
+    setState((){
+      _localLoading = true;
+    });
+  }
+}
+
+// Học về Text Widget
+class TextWidget extends StatelessWidget {
+  const TextWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('Toi la nam, tôi mới học lập trình flutter aaaaaaaaaaaaaa'
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.right,
+      maxLines: 4,
+      overflow: TextOverflow.ellipsis,
+      textScaleFactor: 1.2,
+      style: TextStyle(
+        color: Colors.pink,
+        backgroundColor: Colors.orange,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        fontStyle: FontStyle.italic,
+        fontFamily: 'Dancing',
+        wordSpacing: 2,
+        letterSpacing: 1,
+        decoration: TextDecoration.none,
+      ),
+    );
+  }
+
+}
+
+// Học cách custom font
+// Bước 1 tải font
+// Bước 2 tạo thư mục assets/fonts/ copy file font tải vào đây
+// Bước 3 khai báo font mới tải vào file pubspect.yaml với cấu trúc sau
+// fonts:
+// - family: Dancing
+// fonts:
+// - asset: assets/fonts/DancingScript.ttf
+// Bước 4 dùng thôi
