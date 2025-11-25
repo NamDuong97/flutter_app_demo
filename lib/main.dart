@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 void main() {
   // Bước 3: Chạy hàm khởi động app
   runApp(MaterialApp(
-    // Sử dụng widget
+    // Sử dụng widget ThemeData để cấu hình font cho toàn
+    // theme: ThemeData(
+    //   fontFamily: 'Dancing',
+    // ),
     home: SafeArea(
       // để giao diện k bị đè lên khung điện thoại
       child: Scaffold(
         // giao diện bên trong màn hình
-        body: Center(
-            child: TextWidget(),
-        ),
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Text('Tu hoc flutter'),
-        ),
+        body: Demo5(),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.green,
+        //   title: Text('Tu hoc flutter'),
+        // ),
       ),
     ),
     debugShowCheckedModeBanner: false,
@@ -141,6 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 // Code Nam viết
+
 //StateLess Widget chỉ cần 1 class kế thừa StatelessWidget
 class MyWidgetLess extends StatelessWidget {
 
@@ -156,7 +158,6 @@ class MyWidgetLess extends StatelessWidget {
     //   return Text('StateLess');
     // }
     return loading ?  CircularProgressIndicator() : Text('StateLess');
-    throw UnimplementedError();
   }
 }
 
@@ -178,6 +179,7 @@ class MyWidgetFullState extends State<MyWidgetFull> {
 
   @override
   void initState(){
+    super.initState();
     _localLoading = widget.loading;
   }
 
@@ -214,7 +216,7 @@ class TextWidget extends StatelessWidget {
         fontSize: 20,
         fontWeight: FontWeight.w500,
         fontStyle: FontStyle.italic,
-        fontFamily: 'Dancing',
+        fontFamily: 'Times New Roman',
         wordSpacing: 2,
         letterSpacing: 1,
         decoration: TextDecoration.none,
@@ -225,11 +227,643 @@ class TextWidget extends StatelessWidget {
 }
 
 // Học cách custom font
-// Bước 1 tải font
-// Bước 2 tạo thư mục assets/fonts/ copy file font tải vào đây
-// Bước 3 khai báo font mới tải vào file pubspect.yaml với cấu trúc sau
-// fonts:
-// - family: Dancing
-// fonts:
-// - asset: assets/fonts/DancingScript.ttf
-// Bước 4 dùng thôi
+class CustomFont {
+  // Bước 1 tải font
+  // Bước 2 tạo thư mục assets/fonts/ copy file font tải vào đây
+  // Bước 3 khai báo font mới tải vào file pubspect.yaml với cấu trúc sau
+  // fonts:
+  // - family: Dancing
+  // fonts:
+  // - asset: assets/fonts/DancingScript.ttf
+  // Bước 4 dùng thôi
+}
+
+// Học về RichText Widget
+class RichTextWidget extends StatelessWidget {
+  const RichTextWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+  return RichText(text:
+    TextSpan(
+      style: DefaultTextStyle.of(context).style,
+      children: <TextSpan>[
+        TextSpan(text: 'Hello'),
+        TextSpan(text: 'bold', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        TextSpan(text: 'world !!!')
+      ]
+    ),
+  );
+  }
+
+}
+
+// Học về padding margin
+class PaddingMarginWidget extends StatelessWidget {
+  const PaddingMarginWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.pink,
+      margin: EdgeInsets.all(10),
+      child: Padding(
+        // padding: const EdgeInsets.fromLTRB(8,10,8,10),
+        // padding: const EdgeInsets.all(20),
+        // padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.symmetric(vertical: 100,horizontal: 100),
+        child: Text('Nam đây',
+          style: TextStyle(fontSize: 20, color: Colors.white),),
+      )
+    );
+  }
+}
+
+// Học về TextButtonWidget
+class TextButtonWidget extends StatelessWidget {
+  const TextButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Widget Container là 1 kho chứa giống như thẻ div vậy
+    return Container(
+      margin: const EdgeInsets.all(20),
+      // Để thêm icon vào TextButton thì dùng widget TextButton.icon
+      // Thuộc tính child đổi thành label
+      // Thêm thuộc tính icon như bên dưới
+      child: TextButton.icon(
+          // onPressed: (){
+          //   print('Click me');
+          // },
+          // set onpressed = null để disable button
+          onPressed: null,
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.pink,
+            backgroundColor: Colors.green,
+            minimumSize: const Size(120, 80),
+            padding: EdgeInsets.all(50),
+            // tạo hình cho đối tượng như bo tròn
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            // đổ bóng với elevation kích thước bóng, và màu bóng shadowColor
+            elevation: 20,
+            shadowColor: Colors.blue.withOpacity(0.8),
+            // thêm viền màu cho đối tượng
+            side: BorderSide(width: 1, color:Colors.orange),
+            // set background và fore khi button disable
+            disabledBackgroundColor: Colors.grey,
+            disabledForegroundColor: Colors.white,
+          ),
+          icon: const Icon(Icons.add, size: 20),
+          // child: Text('Text Nam', style: TextStyle(fontSize: 20)),
+          label: Text('Text Nam', style: TextStyle(fontSize: 28))
+      ),
+    );
+  }
+}
+
+// Học về ElevatedButtonWidget
+class ElevatedButtonWidget extends StatelessWidget {
+  const ElevatedButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(2),
+      child: ElevatedButton.icon(
+          onPressed: (){
+            print('Click the Elevated Button');
+          },
+          // onPressed: null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.pink,
+            foregroundColor: Colors.white,
+            maximumSize: Size(240, 80),
+            padding: EdgeInsets.all(20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            elevation: 30,
+            shadowColor: Colors.black.withOpacity(0.9),
+            side: const BorderSide(width: 1, color: Colors.yellow),
+            // disabledBackgroundColor: Colors.black,
+            // disabledForegroundColor: Colors.green
+          ),
+          // child: Text('ElevatedButton', style: TextStyle(fontSize: 28)),
+          icon: Icon(Icons.edit, size: 28),
+          label: Text('ElevatedButton', style: TextStyle(fontSize: 28))
+      ),
+    );
+  }
+}
+
+// Học về OutlineButtonWidget
+class OutlineButtonWidget extends StatelessWidget {
+  const OutlineButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: OutlinedButton(
+          onPressed: (){
+            print('Click On OutlinedButton');
+          },
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
+            minimumSize: Size(300, 100),
+            padding: EdgeInsets.all(20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            elevation: 20,
+            shadowColor: Colors.green.withOpacity(0.8),
+            side:BorderSide(width: 1, color: Colors.black)
+          ),
+          child: Text('OutlinedButton', style: TextStyle(fontSize: 20))
+      ),
+    );
+  }
+}
+
+//Học về Widget Container
+class ContainerWidget extends StatelessWidget {
+  const ContainerWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Nếu container k có child thì nó sẽ bao toàn màn hình,
+    // ngược lại nó sẽ bao trùm con nó mà thôi
+    return Container(
+      // color: Colors.blue,
+      width: 200,
+      height: 200,
+      // Trường hợp này đã fix cứng width height container rồi, nên child cách lề đúng theo padding
+      padding: EdgeInsets.all(30),
+      margin: EdgeInsets.all(20),
+      // Tuỳ chỉnh theo thuộc tính
+      // alignment: Alignment.bottomLeft,
+      // Tuỳ chỉnh theo hằng số
+      // alignment: Alignment(1,1),
+      // Tuỳ chỉnh theo số tuỳ thích
+      alignment: FractionalOffset(0.75,1),
+      decoration: BoxDecoration(
+        // Muốn set màu trong này thì phải bỏ màu ở ngoài đi
+        color: Colors.blue,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(width: 2, color: Colors.red),
+      ),
+      transform: Matrix4.rotationZ(0.2),
+      child: Text('NamCoder', style: TextStyle(fontSize: 20, color:Colors.white)),
+    );
+    throw UnimplementedError();
+  }
+}
+
+// Học về SizeBox => hướng content bên trong bằng kích thước của SizeBox
+// Dùng khi biết trước kích thước rồi, có thể dùng SizeBox rỗng làm khoảng cách giữa các widget
+class SizedBoxWidget extends StatelessWidget {
+  const SizedBoxWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 300,
+      height: 100,
+      child: ElevatedButton(
+          onPressed: (){
+            print('Click On ElevatedButton');
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+          ),
+          child: const Text('NamCoder', style: TextStyle(fontSize: 20)))
+    );
+  }
+}
+
+// Row là view group bao quanh view bên trong sắp xếp theo chiều ngang
+// Same div class=row
+class RowWidget extends StatelessWidget {
+  const RowWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey,
+      child: Row(
+        // set kích thước của Row so với container
+        mainAxisSize: MainAxisSize.max,
+        // canh theo chiều ngang các phần tử con cho đẹp trong row
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // theo chiều dọc các phần tử con
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          ElevatedButton(
+              onPressed: (){
+
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white
+              ),
+              child: Text('Button1', style: TextStyle(fontSize: 15))
+          ),
+          ElevatedButton(
+              onPressed: (){
+
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white
+              ),
+              child: Text('Button2', style: TextStyle(fontSize: 15))
+          ),
+          ElevatedButton(
+              onPressed: (){
+
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white
+              ),
+              child: Text('Button3', style: TextStyle(fontSize: 15))
+          ),
+        ],
+      ),
+    );
+  }
+
+}
+
+// Column là view group bao quanh view bên trong sắp xếp theo chiều dọc
+// Same div class=col
+class ColumnWidget extends StatelessWidget {
+  const ColumnWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ElevatedButton(
+              onPressed: (){
+
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white
+              ),
+              child: Text('Button1', style: TextStyle(fontSize: 15))
+          ),
+          ElevatedButton(
+              onPressed: (){
+
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white
+              ),
+              child: Text('Button2', style: TextStyle(fontSize: 15))
+          ),
+          ElevatedButton(
+              onPressed: (){
+
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white
+              ),
+              child: Text('Button3', style: TextStyle(fontSize: 15))
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Expanded Widget sắp xếp bố cục theo tỷ lệ
+class ExpandedWidget extends StatelessWidget {
+  const ExpandedWidget({super.key});
+  // Kết hợp SizedBox để tạo khoảng cách giữa các Expanded
+  // Kèm theo đó là margin để tạo khoảng cách với lề
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.grey,
+                height: 150,
+              )
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.blue,
+                height: 150,
+              )
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+              flex:1,
+              child: Container(
+                color: Colors.green,
+                height: 150,
+              )
+          ),
+        ]
+      )
+    );
+  }
+
+}
+
+// Sử dụng kết hợp row, column, expanded, container, sizedbox trong flutter
+class DemoWidget extends StatelessWidget {
+  const DemoWidget({super.key});
+  // Cách tư duy thiết kế giao diện này
+  // Ta thấy username và Trần Doãn Nam đều là text, trong đó label có size cố đinh
+  // Ta sẽ để label trong SizedBox còn tên để trong Text,
+  // 2 cái này ngang nhau nên đặt trong row, tương tự với 2 cái còn lại
+  // Cái cuối là 2 button cách đều nhau nghĩ ngay tới Expanded chứa 2 ElevanButton
+  // 2 cái Expanded này nằm trên 1 dòng vậy đặt trong 1 Row
+  // Toàn bộ các row này trong 1 column được bọc bởi container
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 80,
+                child: Text('UserName: ', style: const TextStyle(fontSize: 14, color: Colors.grey),),
+              ),
+              Text('Trần Doãn Nam', style: TextStyle(fontSize: 18, color: Colors.blueAccent))
+            ],
+          ),
+          const SizedBox(width: 10),
+          Row(
+            children: [
+              SizedBox(
+                width: 80,
+                child: Text('Email: ', style: const TextStyle(fontSize: 14, color: Colors.grey),),
+              ),
+              Text('Nakani3797@gmail.com', style: TextStyle(fontSize: 18, color: Colors.blueAccent))
+            ],
+          ),
+          const SizedBox(width: 10),
+          Row(
+            children: [
+              SizedBox(
+                width: 80,
+                child: Text('Address: ', style: const TextStyle(fontSize: 14, color: Colors.grey),),
+              ),
+              Text('64 Lê Lợi TPHCM', style: TextStyle(fontSize: 18, color: Colors.blueAccent))
+            ],
+          ),
+          const SizedBox(width: 10),
+          Row(
+            children: [
+              Expanded(
+                  child: ElevatedButton(
+                      style:ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.black
+                      ),
+                      onPressed: (){},
+                      child: Text('Add', style: TextStyle(fontSize: 18, color: Colors.white),)
+                  )
+              ),
+              Expanded(
+                  child: ElevatedButton(
+                      style:ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange
+                      ),
+                      onPressed: (){},
+                      child: Text('Edit', style: TextStyle(fontSize: 18, color: Colors.white),)
+                  )
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// Sử dụng Stack widget để sắp xếp bố cục chồng lên nhau = row, column
+class StackWidget extends StatelessWidget {
+  const StackWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey,
+      width: 500,
+      height: 500,
+      child: Stack(
+        // điều chỉnh kích thước các layout
+        fit: StackFit.loose,
+        alignment: Alignment.center,
+        // Set nhìn dc phần tràn ra ngoài phần tử con nằm trong Stack
+        clipBehavior: Clip.none,
+        // textDirection: TextDirection.ltr,
+        children: [
+          Container(
+            color: Colors.blue,
+            width: 300,
+            height: 300,
+          ),
+          // Sử dụng widget Positioned với left, top, right, bottom để
+          // điều chỉnh vị trí trong Stack
+          Positioned(
+            left: 10,
+            bottom: 10,
+            child: Container(
+              color: Colors.green,
+              width: 200,
+              height: 700,
+            ),
+          ),
+          // Sử dụng widget Align với alignment để điều chỉnh vị trí trong Stack
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              color: Colors.pink,
+              width: 100,
+              height: 100,
+            ),
+          ),
+          Container(
+            color: Colors.yellow,
+            width: 70,
+            height: 70,
+          ),
+          Container(
+            color: Colors.red,
+            width: 50,
+            height: 50,
+          )
+        ],
+      ),
+    );
+  }
+
+}
+
+// Phân biệt Expanded và Flexible
+// Cả hai đều phải là con trực tiếp của Row, Column, Flex
+class Demo2 extends StatelessWidget{
+  const Demo2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Flexible(
+            flex: 1,
+            // Nếu set FlexFit.tight thì Flexible = Expanded
+            // Ngược lại FlexFit.loose thì nó có thể thay đổi Container dễ dàng
+            fit: FlexFit.tight,
+            child: Container(
+              height: 100,
+              color: Colors.blue,
+            )
+        ),
+        Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+            child: Container(
+              color: Colors.yellow,
+            )
+        ),
+        Flexible(
+            flex: 1,
+            fit: FlexFit.tight,
+            child: Container(
+              color: Colors.grey,
+            )
+        ),
+      ],
+    );
+  }
+
+}
+
+// Xây dựng giao diện cơ bản với Stack, Positoned, Card...
+class Demo3 extends StatelessWidget {
+  const Demo3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          color: Colors.orange,
+        ),
+        Positioned(
+          bottom: 20,
+          left: 10,
+          right: 10,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10)
+            ),
+            color: Colors.grey,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Text('NamCoder', style: TextStyle(fontSize: 20, color:Colors.white),),
+                  const SizedBox(height: 20),
+                  Text('Học lập trình flutter '
+                      'Học lập trình flutter '
+                      'Học lập trình flutter '
+                      'Học lập trình flutter',
+                    style: TextStyle(fontSize: 20, color:Colors.white),
+                  )
+                ],
+              ),
+            )
+          ),
+        )
+      ],
+    );
+  }
+}
+
+// Xây dụng giao diện cơ bản bài hát
+class Demo5 extends StatelessWidget {
+  const Demo5({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                height: 40,
+                color: Colors.red,
+              ),
+              const SizedBox(width: 10,),
+              Expanded(
+                  child:Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text('Nguyễn Văn Thanh', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                      Text('Lê Lợi TPHCM', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),)
+                    ],
+                  )
+              ),
+              Container(
+                width: 20,
+                height: 20,
+                color: Colors.green
+              ),
+              const SizedBox(width: 10,),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                      width: 20,
+                      height: 20,
+                      color: Colors.green
+                  ),
+                  Text('20')
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
