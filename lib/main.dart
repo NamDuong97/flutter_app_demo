@@ -13,7 +13,7 @@ void main() {
       // để giao diện k bị đè lên khung điện thoại
       child: Scaffold(
         // giao diện bên trong màn hình
-        body: Demo5(),
+        body: WidgetExamplesPage(),
         // appBar: AppBar(
         //   backgroundColor: Colors.green,
         //   title: Text('Tu hoc flutter'),
@@ -865,5 +865,550 @@ class Demo5 extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class WidgetExamplesPage extends StatefulWidget {
+  @override
+  _WidgetExamplesPageState createState() => _WidgetExamplesPageState();
+}
+
+class _WidgetExamplesPageState extends State<WidgetExamplesPage> {
+  bool _checkboxValue = false;
+  bool _switchValue = false;
+  String _radioValue = 'option1';
+  TextEditingController _textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // AppBar - Thanh tiêu đề
+      appBar: AppBar(
+        title: Text('Flutter Widget Examples'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
+          ),
+        ],
+      ),
+
+      // Drawer - Menu trượt
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+
+      // Body - Nội dung chính
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          // 1. Container Example
+          _buildSection(
+            'Container',
+            Container(
+              width: 200,
+              height: 100,
+              padding: EdgeInsets.all(16),
+              margin: EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.blue[100],
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.blue, width: 2),
+              ),
+              child: Center(
+                child: Text('Container with decoration'),
+              ),
+            ),
+          ),
+
+          // 2. Text Examples
+          _buildSection(
+            'Text',
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Normal Text'),
+                Text(
+                  'Bold Text',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Styled Text',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blue,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // 3. Image Example
+          _buildSection(
+            'Image',
+            Column(
+              children: [
+                // Image from network
+                Image.network(
+                  'https://picsum.photos/200/100',
+                  height: 100,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: 8),
+                Text('Image from network'),
+              ],
+            ),
+          ),
+
+          // 4. Icon Example
+          _buildSection(
+            'Icon',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(Icons.favorite, color: Colors.red, size: 32),
+                Icon(Icons.star, color: Colors.amber, size: 32),
+                Icon(Icons.thumb_up, color: Colors.blue, size: 32),
+                Icon(Icons.share, color: Colors.green, size: 32),
+              ],
+            ),
+          ),
+
+          // 5. Button Examples
+          _buildSection(
+            'Buttons',
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Elevated Button'),
+                ),
+                SizedBox(height: 8),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('Text Button'),
+                ),
+                SizedBox(height: 8),
+                OutlinedButton(
+                  onPressed: () {},
+                  child: Text('Outlined Button'),
+                ),
+                SizedBox(height: 8),
+                IconButton(
+                  icon: Icon(Icons.favorite),
+                  onPressed: () {},
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+
+          // 6. Row & Column Example
+          _buildSection(
+            'Row & Column',
+            Container(
+              padding: EdgeInsets.all(16),
+              color: Colors.grey[200],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Row Example:'),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(color: Colors.red, width: 50, height: 50),
+                      Container(color: Colors.green, width: 50, height: 50),
+                      Container(color: Colors.blue, width: 50, height: 50),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Text('Column Example:'),
+                  SizedBox(height: 8),
+                  Column(
+                    children: [
+                      Container(color: Colors.orange, width: 100, height: 30),
+                      SizedBox(height: 4),
+                      Container(color: Colors.purple, width: 100, height: 30),
+                      SizedBox(height: 4),
+                      Container(color: Colors.teal, width: 100, height: 30),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // 7. Stack Example
+          _buildSection(
+            'Stack',
+            Container(
+              height: 150,
+              child: Stack(
+                children: [
+                  Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.blue[100],
+                  ),
+                  Positioned(
+                    top: 20,
+                    left: 20,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      color: Colors.red.withOpacity(0.7),
+                      child: Center(child: Text('Front')),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: Icon(Icons.star, size: 50, color: Colors.amber),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // 8. ListView Example
+          _buildSection(
+            'ListView (Horizontal)',
+            Container(
+              height: 100,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 80,
+                    margin: EdgeInsets.only(right: 8),
+                    color: Colors.primaries[index % Colors.primaries.length],
+                    child: Center(
+                      child: Text(
+                        '${index + 1}',
+                        style: TextStyle(color: Colors.white, fontSize: 24),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          // 9. GridView Example
+          _buildSection(
+            'GridView',
+            Container(
+              height: 200,
+              child: GridView.count(
+                crossAxisCount: 3,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                children: List.generate(9, (index) {
+                  return Container(
+                    color: Colors.primaries[index % Colors.primaries.length],
+                    child: Center(
+                      child: Text(
+                        '${index + 1}',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+
+          // 10. TextField Example
+          _buildSection(
+            'TextField',
+            Column(
+              children: [
+                TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    labelText: 'Enter text',
+                    hintText: 'Type something...',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.edit),
+                  ),
+                ),
+                SizedBox(height: 8),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.visibility),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // 11. Checkbox Example
+          _buildSection(
+            'Checkbox',
+            CheckboxListTile(
+              title: Text('Accept terms and conditions'),
+              value: _checkboxValue,
+              onChanged: (bool? value) {
+                setState(() {
+                  _checkboxValue = value ?? false;
+                });
+              },
+            ),
+          ),
+
+          // 12. Radio Example
+          _buildSection(
+            'Radio',
+            Column(
+              children: [
+                RadioListTile<String>(
+                  title: Text('Option 1'),
+                  value: 'option1',
+                  groupValue: _radioValue,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _radioValue = value ?? 'option1';
+                    });
+                  },
+                ),
+                RadioListTile<String>(
+                  title: Text('Option 2'),
+                  value: 'option2',
+                  groupValue: _radioValue,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _radioValue = value ?? 'option1';
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+
+          // 13. Switch Example
+          _buildSection(
+            'Switch',
+            SwitchListTile(
+              title: Text('Enable notifications'),
+              value: _switchValue,
+              onChanged: (bool value) {
+                setState(() {
+                  _switchValue = value;
+                });
+              },
+            ),
+          ),
+
+          // 14. Card Example
+          _buildSection(
+            'Card',
+            Card(
+              elevation: 4,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Card Title',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text('This is a card with elevation and padding.'),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          child: Text('ACTION 1'),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text('ACTION 2'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // 15. GestureDetector & InkWell Example
+          _buildSection(
+            'GestureDetector & InkWell',
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('GestureDetector tapped!')),
+                    );
+                  },
+                  onLongPress: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Long pressed!')),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    color: Colors.blue[100],
+                    child: Text('Tap or Long Press (GestureDetector)'),
+                  ),
+                ),
+                SizedBox(height: 8),
+                InkWell(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('InkWell tapped!')),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    color: Colors.green[100],
+                    child: Text('Tap for Ripple Effect (InkWell)'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // 16. Expanded & Flexible Example
+          _buildSection(
+            'Expanded & Flexible',
+            Container(
+              height: 100,
+              child: Row(
+                children: [
+                  Container(
+                    width: 50,
+                    color: Colors.red,
+                    child: Center(child: Text('Fixed')),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: Colors.green,
+                      child: Center(child: Text('Expanded (2)')),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.blue,
+                      child: Center(child: Text('Expanded (1)')),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // 17. Divider Example
+          _buildSection(
+            'Divider',
+            Column(
+              children: [
+                Text('Content above'),
+                Divider(thickness: 2, color: Colors.grey),
+                Text('Content below'),
+              ],
+            ),
+          ),
+        ],
+      ),
+
+      // BottomNavigationBar Example
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: 0,
+        onTap: (index) {},
+      ),
+
+      // FloatingActionButton
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('FloatingActionButton pressed!')),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  // Helper method để tạo section
+  Widget _buildSection(String title, Widget child) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+        child,
+        SizedBox(height: 24),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 }
